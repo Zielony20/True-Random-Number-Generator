@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 
 #video_source='video2.m4v'
-video_source='video12.mp4'
+video_source='video1.mp4'
 
 T = TrueRandomNumberGenerator(video_source)
 
