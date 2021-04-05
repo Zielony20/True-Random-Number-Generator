@@ -8,9 +8,8 @@ Based on https://www.researchgate.net/publication/283021854_A_True_Random_Number
 sudo add-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.9 python3-pip
+sudo apt install ffmpeg libsm6 libxext6  -y
 ```
-
-Tutorial for instalation python3 you can find here https://linuxhint.com/install-python-3-9-linux-mint/
 
 Download Requirements
 ```
