@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 
-
 class TrueRandomNumberGenerator:
 
     def __init__(self, video_source,):
@@ -22,13 +21,12 @@ class TrueRandomNumberGenerator:
     def __del__(self):
         self.cap.release()
         cv2.destroyAllWindows()
-    def capRefresh(self):
-        pass
     
     def getAllRandomizedSamples(self):
         return self.FinalList
 
     def getSourceVideoSamples(self):
+        #print(self.Frames.ravel().shape)
         return self.Frames.ravel()
 
     def rand(self,count=100 ):
@@ -45,6 +43,7 @@ class TrueRandomNumberGenerator:
             self.FinalList = np.concatenate((self.FinalList,self.__takeOne().ravel()),axis=None)
             self.NumSoFar = self.FinalList.size
             i+=1     
+            print(self.NumSoFar)
         self.Randomized+=count
         return self.FinalList[self.Randomized-count:self.Randomized]
 
@@ -58,12 +57,11 @@ class TrueRandomNumberGenerator:
             ret, frame = self.cap.read()
             if(ret):
                 #cv2.imshow('Image', frame)
-                x=frame.shape[0]
-                y=frame.shape[1]
                 frames.append(frame)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
                 i+=1
+        #print(len(frames[0]))
         return np.array(frames)
         
     #funkcja obcina wskazane wartości graniczne

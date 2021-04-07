@@ -2,26 +2,34 @@ from trng import TrueRandomNumberGenerator
 from scipy.stats import entropy
 import matplotlib.pyplot as plt
 import time
+import numpy as np
 
-#video_source='video2.m4v'
-video_source='video1.mp4'
+def MyEntropy(n):
+    result = 0
+    for i in n:
+        result+= i* np.log2(1/i)
+    return result
 
+video_source='video6.mp4'
+
+start = time.time()
 T = TrueRandomNumberGenerator(video_source)
+print(T.rand( 200000 ))
+end = time.time()
 
-print(T.rand( 100000 ))
-print(T.rand( 100 ))
-print(T.rand( 100 ))
-print(T.rand( 100 ))
-
-plt.hist(T.getSourceVideoSamples(),bins=255,range=[0,255],density=True)
+n, bins, patches = plt.hist(T.getSourceVideoSamples(),bins=255,range=[0,255],density=True)
 plt.savefig("source.png")
 plt.clf()
 plt.cla()
 plt.close()
 
-plt.hist(T.getAllRandomizedSamples(),bins=256,range=[0,255],density=True)
+print("Entropy of raw data:",entropy(n,base=2))
+
+n, bins, patches = plt.hist(T.getAllRandomizedSamples(),bins=255,range=[0,255],density=True)
 plt.savefig("resault.png")
 plt.clf()
 plt.cla()
 plt.close()
 
+print("Entropy after postprocessing:",entropy(n,base=2))
+print("time:",end - start)
