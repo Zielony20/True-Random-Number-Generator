@@ -13,7 +13,7 @@ sudo apt install ffmpeg libsm6 libxext6  -y
 
 Download Requirements
 ```
-pip3 install -r requiremets.txt
+pip3 install -r requirements.txt
 ```
 # Usage
 
