@@ -10,7 +10,7 @@ def MyEntropy(n):
         result+= i* np.log2(1/i)
     return result
 
-video_source='video6.mp4'
+video_source='video1.mp4'
 
 start = time.time()
 T = TrueRandomNumberGenerator(video_source)
