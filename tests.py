@@ -14,7 +14,7 @@ video_source='video1.mp4'
 
 start = time.time()
 T = TrueRandomNumberGenerator(video_source)
-print(T.rand( 200000 ))
+print(T.rand( 100000 ))
 end = time.time()
 
 n, bins, patches = plt.hist(T.getSourceVideoSamples(),bins=255,range=[0,255],density=True)

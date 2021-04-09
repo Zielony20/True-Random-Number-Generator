@@ -43,7 +43,7 @@ class TrueRandomNumberGenerator:
             self.FinalList = np.concatenate((self.FinalList,self.__takeOne().ravel()),axis=None)
             self.NumSoFar = self.FinalList.size
             i+=1     
-            print(self.NumSoFar)
+            #print(self.NumSoFar)
         self.Randomized+=count
         return self.FinalList[self.Randomized-count:self.Randomized]
 
