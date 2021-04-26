@@ -3,13 +3,13 @@ import cv2
 
 class TrueRandomNumberGenerator:
 
-    def __init__(self, video_source,):
+    def __init__(self, video_source):
         self.video_source = video_source
 
         #cap = cv2.VideoCapture(0) # Pobierz dane z kamerki
         self.cap = cv2.VideoCapture(self.video_source) # Pobierz dane z nagrania
         print("CV2 open = ", self.cap.isOpened())
-
+        self.bits = 8
         self.mask = 0b00000011
         self.NumSoFar = 0
         self.Frame=self.__getFrames(1)[0]
@@ -29,7 +29,8 @@ class TrueRandomNumberGenerator:
         #print(self.Frames.ravel().shape)
         return self.Frames.ravel()
 
-    def rand(self,count=100 ):
+    def rand(self,count=100,bits = 8 ):
+        self.bits = bits
         self.NumNeeded=count+self.Randomized
         self.NumSoFar=self.FinalList.size
         i=0
@@ -74,7 +75,7 @@ class TrueRandomNumberGenerator:
     #zwraca współrzędne na których skończył pobieranie
     def __takeOne(self):
         final = []
-        Sub = np.array([],dtype='uint8')
+        Sub = np.array([],dtype='uint16')
         for i in range(20):
             a =  self.Frame[self.x:self.x+2,self.y:self.y+3,:]
             self.x += 3
@@ -90,11 +91,15 @@ class TrueRandomNumberGenerator:
         Sub=np.reshape(Sub[0:(z*z).astype(int)],(z,z))    
         Sub = np.flip(Sub.T) # Obróc
         Sub = Sub.ravel()
-        for i in range(0,Sub.size-4,4):
-            b = (Sub[i]   ^
-            (Sub[i+1]<<2) ^ 
-            (Sub[i+2]<<4) ^  
-            (Sub[i+3]<<6)).astype('uint8')
+        
+        
+        for i in range(0,Sub.size-round(self.bits/2),round(self.bits/2)):
+            b = Sub[i].astype('uint32')            
+            for j in range(2,self.bits,2):
+                b = b ^ (Sub[round(i+(j/2))]<<j).astype('uint32')
+        
             final.append(b)
+
+
         return np.array(final)
     

@@ -6,9 +6,9 @@ from trng import TrueRandomNumberGenerator
 
 
 def getRandomInRange(T,a,b):
-    value = T.rand(1)
+    value = T.rand(1,bits=4)
     while value<a or value>b:
-        value = T.rand(1)
+        value = T.rand(1,bits=4)
     return value
 
 def crapstest(T,N):
@@ -76,5 +76,6 @@ video_source='video1.mp4'
 
 T = TrueRandomNumberGenerator(video_source)
 
-crapstest(T,300)
+crapstest(T,15000)
+
 
