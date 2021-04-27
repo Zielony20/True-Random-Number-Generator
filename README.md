@@ -22,8 +22,14 @@ You can edit tests.py to test Random Number Generator
 python3 tests.py
 ```
 
+# Histogram of example RGB values from video
+
+![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/source.png?raw=true)
+
+# Histogram for random numbers generate be generator
 
 
+![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/resault.png?raw=true)
 
 
 
