@@ -1,5 +1,6 @@
 # True Random Number Generator From Digital Camera Image Noise For Varying Lighting Conditions
-Based on https://www.researchgate.net/publication/283021854_A_True_Random_Number_Generator_algorithm_from_digital_camera_image_noise_for_varying_lighting_conditions
+# Based on 
+https://www.researchgate.net/publication/283021854_A_True_Random_Number_Generator_algorithm_from_digital_camera_image_noise_for_varying_lighting_conditions
 
 
 # Installation
@@ -26,7 +27,7 @@ python3 tests.py
 
 ![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/source.png?raw=true)
 
-# Histogram for random numbers generate be generator
+# Histogram of random numbers generate be generator
 
 
 ![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/resault.png?raw=true)
