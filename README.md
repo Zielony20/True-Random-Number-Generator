@@ -27,7 +27,7 @@ python3 tests.py
 
 ![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/source.png?raw=true)
 
-# Histogram of random numbers generate be generator
+# Histogram of random numbers generate by generator
 
 
 ![alt text](https://github.com/Zielony20/True-Random-Number-Generator/blob/main/resault.png?raw=true)
