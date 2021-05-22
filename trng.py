@@ -21,7 +21,14 @@ class TrueRandomNumberGenerator:
     def __del__(self):
         self.cap.release()
         cv2.destroyAllWindows()
-    
+
+    def __reset(self):
+        self.cap.release()
+        cv2.destroyAllWindows()
+        self.cap = cv2.VideoCapture(self.video_source)
+
+
+
     def getAllRandomizedSamples(self):
         return self.FinalList
 
@@ -39,12 +46,13 @@ class TrueRandomNumberGenerator:
             if self.Frame.shape[0]<=self.x+2 or self.Frame.shape[1]<=self.y+4:
                 self.Frame=self.__getFrames(1)[0]
                 self.x,self.y=(0,0)
+                #print(self.Frame)
                 np.append(self.Frames,self.Frame)
 
             self.FinalList = np.concatenate((self.FinalList,self.__takeOne().ravel()),axis=None)
             self.NumSoFar = self.FinalList.size
             i+=1     
-            #print(self.NumSoFar)
+            print(self.NumSoFar)
         self.Randomized+=count
         return self.FinalList[self.Randomized-count:self.Randomized]
 
@@ -62,7 +70,10 @@ class TrueRandomNumberGenerator:
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
                 i+=1
-        #print(len(frames[0]))
+            else:
+                self.__reset()
+                ret, frame = self.cap.read()
+                frames.append(frame)
         return np.array(frames)
         
     #funkcja obcina wskazane wartości graniczne
@@ -75,7 +86,7 @@ class TrueRandomNumberGenerator:
     #zwraca współrzędne na których skończył pobieranie
     def __takeOne(self):
         final = []
-        Sub = np.array([],dtype='uint16')
+        Sub = np.array([],dtype='uint32')
         for i in range(20):
             a =  self.Frame[self.x:self.x+2,self.y:self.y+3,:]
             self.x += 3
