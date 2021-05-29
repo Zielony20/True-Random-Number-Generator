@@ -2,21 +2,22 @@ import scipy.stats
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from tqdm import tqdm, trange
 
 def Phi(x):
-{
-  tmp = x/np.sqrt(2.)
-  tmp = 1+math.erf(tmp) 
 
-  return tmp/2
-}
+    tmp = x/np.sqrt(2.)
+    tmp = 1+math.erf(tmp) 
 
+    return tmp/2
 
-words_file = open("slowa.txt",'r')
+file = 'slowaZGeneratora.txt'
+
+words_file = open(file,'r')
 Q5=[]
 Q4=[]
-
-for q in range(100):
+N=100
+for q in trange(N):
     wordsCounter={'AAAAA':0}
 
     propability={
@@ -71,12 +72,12 @@ for q in range(100):
         t.append(j)
 
     chisq, p = scipy.stats.chisquare( t ,f_exp = f_exp)
-    print("Słowa 5-literowe: ",chisq, p)
+    #print("Słowa 5-literowe: ",chisq, p)
 words_file.close()
 
 
-words_file = open("slowa.txt",'rt')
-for q in range(100):
+words_file = open(file,'r')
+for q in trange(N):
 
     
     wordsCounter={'AAAA':0}
@@ -96,22 +97,19 @@ for q in range(100):
         if(i>=256000):
             break
     
-
-
-    
     wordsCounter = dict(sorted(wordsCounter.items()))
     Q=0
     f_exp = []
     to_display = []
-    for v,k in wordsCounter.items():
-        mean = np.prod([propability[i] for i in v ]) * sum_latter_number
+    for key,observ in wordsCounter.items():
+        mean = np.prod([propability[i] for i in key ]) * sum_latter_number
         f_exp.append(mean)
         #print(mean)
-        observ = k
-        Q += ((k-mean)**2)/mean
-        to_display.append(k)
+        
+        Q += ((observ-mean)**2)/mean
+        to_display.append(observ)
     Q4.append(Q)
-    #ABCDEAB
+    
     plt.plot( np.linspace(1, 625,num=625),to_display)
     
     plt.savefig("4-words_distribution.png")
@@ -126,27 +124,27 @@ for q in range(100):
         t.append(j)
 
     chisq, p = scipy.stats.chisquare( t ,f_exp = f_exp)
-    print("Słowa 4-literowe: ",chisq, p)
+    #print("Słowa 4-literowe: ",chisq, p)
 words_file.close()
 
 #print(Q4)
 
-plt.plot( np.linspace(1, 100,num=100),Q4)
+plt.bar( np.linspace(1, len(Q4),num=len(Q4)),Q4)
     
 plt.savefig("Q4.png")
 plt.clf()
 plt.cla()
 plt.close()
 
-plt.plot( np.linspace(1, 100,num=100),Q5)
+plt.bar( np.linspace(1, len(Q5),num=len(Q5)),Q5)
     
 plt.savefig("Q5.png")
 plt.clf()
 plt.cla()
 plt.close()
 Qdiff = np.array(Q5)-np.array(Q4)
-plt.plot( np.linspace(1, 100,num=100) , Qdiff )
-    
+plt.bar( np.linspace(1, len(Q5),num=len(Q5)) , Qdiff )
+print('Mean Q5-Q4 =', np.mean(Qdiff))
 plt.savefig("Q5-Q4.png")
 plt.clf()
 plt.cla()
@@ -155,29 +153,39 @@ plt.close()
 
 mean=2500 
 std=np.sqrt(5000)
+p_value_Q_differ=[]
+for i in Qdiff:
+    p_value_Q_differ.append( 1-Phi((i-mean)/std) )
 
-p_value_Q_differ = 1-Phi((Qdiff-mean)/std)
-plt.plot( np.linspace(1, 100,num=100) , p_value_Q_differ )
-    
+#plt.bar( np.linspace(1, len(p_value_Q_differ),num=len(p_value_Q_differ)) , p_value_Q_differ )
+n, bins, patches = plt.hist(p_value_Q_differ)    
 plt.savefig("Pvalue_Q5-Q4.png")
 plt.clf()
 plt.cla()
 plt.close()
 
-p_value_Q5 = 1-Phi((np.array(Q5)-mean)/std)
-plt.plot( np.linspace(1, 100,num=100) , p_value_Q5 )
+stats, p = scipy.stats.kstest(n,'uniform')
+print(p)
+
+p_value_Q5=[]
+for i in Q5:
+    p_value_Q5.append( 1-Phi((i-mean)/std) )
+
+
+plt.bar( np.linspace(1, N,num=N) , p_value_Q5 )
     
 plt.savefig("Pvalue_Q5.png")
 plt.clf()
 plt.cla()
 plt.close()
 
-p_value_Q4 = 1-Phi((np.array(Q4)-mean)/std)
-plt.plot( np.linspace(1, 100,num=100) , p_value_Q4 )
+p_value_Q4=[]
+for i in Q4:
+    p_value_Q4.append( 1-Phi((i-mean)/std) )
+
+plt.bar( np.linspace(1,N,num=N) , p_value_Q4 )
     
 plt.savefig("Pvalue_Q4.png")
 plt.clf()
 plt.cla()
 plt.close()
-
-

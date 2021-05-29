@@ -30,8 +30,8 @@ for j in range(1):
         k = 2147483647
         j=0
         while ( k!=1 and j<48 ):
-            #f = np.random.rand(1)[0]
-            f = T.rand(1,bits=32)/2**32
+            f = np.random.rand(1)[0]
+            #f = T.rand(1,bits=32)/2**32
             k = np.ceil(np.multiply(k, f))
             j+=1
         if(j<6):

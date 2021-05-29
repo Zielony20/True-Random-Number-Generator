@@ -27,6 +27,10 @@ class TrueRandomNumberGenerator:
         cv2.destroyAllWindows()
         self.cap = cv2.VideoCapture(self.video_source)
 
+    def __resetList(self):
+        self.FinalList = np.array([])
+        self.Randomized = 0
+
 
 
     def getAllRandomizedSamples(self):
@@ -36,7 +40,11 @@ class TrueRandomNumberGenerator:
         #print(self.Frames.ravel().shape)
         return self.Frames.ravel()
 
-    def rand(self,count=100,bits = 8 ):
+    def rand(self,count=100,bits = 8, infoText=False):
+
+        if( self.FinalList.size>3e5+count ):
+            self.__resetList()
+
         self.bits = bits
         self.NumNeeded=count+self.Randomized
         self.NumSoFar=self.FinalList.size
@@ -52,7 +60,8 @@ class TrueRandomNumberGenerator:
             self.FinalList = np.concatenate((self.FinalList,self.__takeOne().ravel()),axis=None)
             self.NumSoFar = self.FinalList.size
             i+=1     
-            print(self.NumSoFar)
+            if(infoText):
+                print(self.NumSoFar)
         self.Randomized+=count
         return self.FinalList[self.Randomized-count:self.Randomized]
 
