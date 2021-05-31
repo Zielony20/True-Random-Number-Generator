@@ -21,17 +21,18 @@ source = 'video1.mp4'
 
 T = TrueRandomNumberGenerator(source)
 
-resault=[]
+
 final_10_pvalue=[]
 
-for j in range(1):
+for r in range(10):
+    resault=[]
     for i in trange(100000):
         
         k = 2147483647
         j=0
         while ( k!=1 and j<48 ):
-            f = np.random.rand(1)[0]
-            #f = T.rand(1,bits=32)/2**32
+            #f = np.random.rand(1)[0]
+            f = T.rand(1,bits=32)/2**32
             k = np.ceil(np.multiply(k, f))
             j+=1
         if(j<6):
@@ -55,7 +56,7 @@ for j in range(1):
 
     ax.set_title('')
     ax.legend()
-    plt.savefig("squeez.png")
+    plt.savefig("squeez"+str(r)+".png")
     plt.clf()
     plt.cla()
     plt.close()
@@ -65,7 +66,7 @@ for j in range(1):
     final_10_pvalue.append(p)
 
 
-n,bins,patches=plt.hist( np.array(resault)-5, bins=43, range=[1,43] )
+plt.bar( np.linspace(0,10,num=10),final_10_pvalue )
 plt.savefig("squeez_test_10_pvalue.png")
 plt.clf()
 plt.cla()
