@@ -34,3 +34,6 @@ python3 tests.py
 
 
 
+# Live tests:
+
+https://zielony20-true-random-number-generator-web-55abxx.streamlitapp.com/
