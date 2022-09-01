@@ -4,7 +4,7 @@ import cv2
 class TrueRandomNumberGenerator:
 
     def __init__(self, video_source):
-        self.video_source = video_source
+        self.video_source = str(video_source)
 
         #cap = cv2.VideoCapture(0) # Pobierz dane z kamerki
         self.cap = cv2.VideoCapture(self.video_source) # Pobierz dane z nagrania
@@ -17,6 +17,9 @@ class TrueRandomNumberGenerator:
         self.FinalList = np.array([])
         self.x,self.y=(0,0)
         self.Randomized=0
+
+        self.FinalByteArray = bytearray([])
+
     
     def __del__(self):
         self.cap.release()
@@ -34,7 +37,8 @@ class TrueRandomNumberGenerator:
 
 
     def getAllRandomizedSamples(self):
-        return self.FinalList
+        return self.FinalByteArray
+        #return self.FinalList
 
     def getSourceVideoSamples(self):
         #print(self.Frames.ravel().shape)
@@ -58,6 +62,7 @@ class TrueRandomNumberGenerator:
                 np.append(self.Frames,self.Frame)
 
             self.FinalList = np.concatenate((self.FinalList,self.__takeOne().ravel()),axis=None)
+            
             self.NumSoFar = self.FinalList.size
             i+=1     
             if(infoText):
