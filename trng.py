@@ -81,8 +81,8 @@ class TrueRandomNumberGenerator:
             if(ret):
                 #cv2.imshow('Image', frame)
                 frames.append(frame)
-                if cv2.waitKey(1) & 0xFF == ord('q'):
-                    break
+                #if cv2.waitKey(1) & 0xFF == ord('q'):
+                #    break
                 i+=1
             else:
                 self.__reset()
